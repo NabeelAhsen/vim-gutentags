@@ -243,7 +243,10 @@ endfunction
 " Setup gutentags for the current buffer.
 function! gutentags#setup_gutentags() abort
     if exists('b:gutentags_files') && !g:gutentags_debug
-        " This buffer already has gutentags support.
+        " Change the buffer no matter what.
+        call gutentags#trace("Setting local tags on buffer change")
+        let l:literal_space_escaped = substitute(fnameescape(b:gutentags_files['ctags']), '\ ', '\\\\ ', 'g')
+        execute 'setlocal tags^=' . l:literal_space_escaped
         return
     endif
 
